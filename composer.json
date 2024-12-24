@@ -24,7 +24,7 @@
         "symfony/css-selector": "7.2.*",
         "symfony/maker-bundle": "^1.61",
         "symfony/phpunit-bridge": "^7.2",
-        "zenstruck/foundry": "^2.3"
+        "zenstruck/foundry": "2.x-dev"
     },
     "config": {
         "allow-plugins": {

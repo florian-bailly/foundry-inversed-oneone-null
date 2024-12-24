@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AccountSettingRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AccountSettingRepository::class)]
@@ -19,6 +21,17 @@ class AccountSetting
     #[ORM\OneToOne(inversedBy: 'accountSetting', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Account $account = null;
+
+    /**
+     * @var Collection<int, AccountMultipleSetting>
+     */
+    #[ORM\OneToMany(targetEntity: AccountMultipleSetting::class, mappedBy: 'accountSetting')]
+    private Collection $accountMultipleSettings;
+
+    public function __construct()
+    {
+        $this->accountMultipleSettings = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -45,6 +58,36 @@ class AccountSetting
     public function setAccount(Account $account): static
     {
         $this->account = $account;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, AccountMultipleSetting>
+     */
+    public function getAccountMultipleSettings(): Collection
+    {
+        return $this->accountMultipleSettings;
+    }
+
+    public function addAccountMultipleSetting(AccountMultipleSetting $accountMultipleSetting): static
+    {
+        if (!$this->accountMultipleSettings->contains($accountMultipleSetting)) {
+            $this->accountMultipleSettings->add($accountMultipleSetting);
+            $accountMultipleSetting->setAccountSetting($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAccountMultipleSetting(AccountMultipleSetting $accountMultipleSetting): static
+    {
+        if ($this->accountMultipleSettings->removeElement($accountMultipleSetting)) {
+            // set the owning side to null (unless already changed)
+            if ($accountMultipleSetting->getAccountSetting() === $this) {
+                $accountMultipleSetting->setAccountSetting(null);
+            }
+        }
 
         return $this;
     }

@@ -32,6 +32,7 @@ final class AccountFactory extends PersistentProxyObjectFactory
     protected function defaults(): array|callable
     {
         return [
+            'foo' => FooFactory::new(),
             'name' => self::faker()->text(255),
         ];
     }

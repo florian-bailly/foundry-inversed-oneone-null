@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace App\Tests;
+
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class SampleTest extends WebTestCase
@@ -11,8 +13,15 @@ class SampleTest extends WebTestCase
 
     public function testBug(): void
     {
+        $foo = \App\Factory\FooFactory::createOne();
+
         \App\Factory\AccountFactory::createOne([
-            'accountSetting' => \App\Factory\AccountSettingFactory::new(),
+            'foo' => $foo,
+            'accountSetting' => \App\Factory\AccountSettingFactory::new([
+                'accountMultipleSettings' => [
+                    \App\Factory\AccountMultipleSettingFactory::new(['foo' => $foo]),
+                ],
+            ]),
         ]);
     }
 }

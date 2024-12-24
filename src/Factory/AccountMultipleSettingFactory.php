@@ -2,13 +2,13 @@
 
 namespace App\Factory;
 
-use App\Entity\AccountSetting;
+use App\Entity\AccountMultipleSetting;
 use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
 
 /**
- * @extends PersistentProxyObjectFactory<AccountSetting>
+ * @extends PersistentProxyObjectFactory<AccountMultipleSetting>
  */
-final class AccountSettingFactory extends PersistentProxyObjectFactory
+final class AccountMultipleSettingFactory extends PersistentProxyObjectFactory
 {
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services
@@ -21,7 +21,7 @@ final class AccountSettingFactory extends PersistentProxyObjectFactory
 
     public static function class(): string
     {
-        return AccountSetting::class;
+        return AccountMultipleSetting::class;
     }
 
     /**
@@ -32,8 +32,8 @@ final class AccountSettingFactory extends PersistentProxyObjectFactory
     protected function defaults(): array|callable
     {
         return [
-            'account' => AccountFactory::new(),
-            'locale' => self::faker()->text(10),
+            'accountSetting' => AccountSettingFactory::new(),
+            'foo' => FooFactory::new(),
         ];
     }
 
@@ -43,7 +43,7 @@ final class AccountSettingFactory extends PersistentProxyObjectFactory
     protected function initialize(): static
     {
         return $this
-            // ->afterInstantiate(function(AccountSetting $accountSetting): void {})
+            // ->afterInstantiate(function(AccountMultipleSetting $accountMultipleSetting): void {})
         ;
     }
 }

@@ -52,4 +52,16 @@ class Account
 
         return $this;
     }
+
+    public function getFoo(): ?Foo
+    {
+        return $this->foo;
+    }
+
+    public function setFoo(?Foo $foo): static
+    {
+        $this->foo = $foo;
+
+        return $this;
+    }
 }
